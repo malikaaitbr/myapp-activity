@@ -1,5 +1,5 @@
 import React from 'react';
-import Emoji from './Emoji';
+import Emoji from './WatherEmoji';
 
 const EmojiWeather = (props) => {
   const { mainWeather: w, time, weather } = props;

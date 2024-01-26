@@ -1,5 +1,5 @@
 import React from "react";
-import { getEmojiClassName } from "./Card";
+import { getEmojiClassName } from "./WeatherCard";
 
 const TodaysCard = (props) => {
   const { emoji, main, city } = props;

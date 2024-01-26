@@ -1,40 +1,72 @@
 import React from "react";
 import "./App.css";
 import { API_KEY } from "./config";
-import { Card, getEmojiClassName } from "./Components/Card";
-import ProgressBar from "./Components/ProgressBar";
+//import activityService from './Components/Service'
 import TodaysCard from "./Components/TodaysCard";
-import City from "./Components/City";
-import { getDate, getTime, hasGeolocationSupport } from "./helpers";
-import Emoji from "./Components/Emoji";
-import Anchor from "./Components/Anchor";
+import City from "./Components/LocCity";
+import { hasGeolocationSupport } from "./Geoloc";
+import Emoji from "./Components/WatherEmoji";
+import Presenter from "./Components/Presenter";
+import generateActivitySuggestions from "./Components/Gpt3";
+
+import openai from 'openai';
+
+
 
 const PERMISSION_DENIED = "Permission denied. Can't show weather information.";
+
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      btnDisabled: false,
-      darkMode: false,
+
       fixCity: false,
       geoAccess: null,
-      forecasts: []
+      result: '',
+      
     };
     this.coords = null;
-    this.onScroll = this.onScroll.bind(this);
+   
   }
 
   componentDidMount() {
     if (hasGeolocationSupport()) {
       this.fetchTodaysWeather();
-      this.onScroll();
+      
     }
   }
 
-  componentWillUnmount = () => {
-    window.removeEventListener("scroll", this.fixCityBar);
+  callNodeService = async () => {
+    try {
+      // Votre logique existante (si nécessaire)
+      //activityService.handleActivityRequest();
+      generateActivitySuggestions();
+     
+      // Exécution de la logique de GPT-3
+      const completion = await openai.chat.completions.create({
+        messages: [
+          {
+            role: "system",
+            content: "You are a helpful assistant designed to suggest activities based on the weather and location.",
+          },
+          {
+            role: "user",
+            content: `What activities can I do today in ${City}? The weather is ${Emoji}.`,
+          },
+        ],
+        model: "gpt-3.5-turbo-1106",
+        response_format: { type: "json_object" },
+      });
+
+      // Mise à jour de l'état avec la réponse de GPT-3
+      this.setState({ result: completion.choices[0].message.content });
+
+    } catch (error) {
+      console.error('Erreur lors de l\'appel de GPT-3', error.message);
+    }
   };
+
 
   fetchTodaysWeather = () => {
     navigator.geolocation.getCurrentPosition((c) => {
@@ -45,18 +77,7 @@ class App extends React.Component {
     }, () => alert(PERMISSION_DENIED));
   };
 
-  fetchForecastWeather = () => {
-    navigator.geolocation.getCurrentPosition((c) => {
-      this.coords = { longitude: c.coords.longitude, latitude: c.coords.latitude };
-      fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${this.coords.latitude}&lon=${this.coords.longitude}&units=metric&APPID=${API_KEY}`)
-        .then(weather => weather.json())
-        .then(data => {
-          // Take every 8th forecast: 40 forecasts/5 days = 8
-          const forecasts = data.list.filter((_, index) => index % 8 === 0);
-          this.setState({ ...data, forecasts, btnDisabled: true, geoAccess: true })
-        });
-    }, () => alert(PERMISSION_DENIED));
-  };
+
 
   fixCityBar = () => {
     const { fixCity } = this.state;
@@ -67,47 +88,39 @@ class App extends React.Component {
     }
   };
 
-  onScroll() {
-    window.addEventListener("scroll", this.fixCityBar);
-  }
 
+ 
   render() {
-    const { geoAccess, current, fixCity, btnDisabled, forecasts } = this.state;
+    //const { activitySuggestions } = this.state;
+    const { geoAccess, current, fixCity, result} = this.state;
     if (geoAccess && current && !!API_KEY) {
       return (
         <>
-          <ProgressBar />
+          
           <City current={current} fix={fixCity} />
           <TodaysCard
             emoji={current.weather[0]}
             main={current.main}
             city={current.name}
           />
-          <button
-            disabled={btnDisabled}
-            style={{ opacity: btnDisabled ? "0" : "1", visibility: btnDisabled ? "hidden" : ""}}
-            onClick={this.fetchForecastWeather.bind(this)}
-            className="btn-fetch"
-          >
-            Load 5 day weather forecast
-          </button>
-          {this.state.list && (
-            <div className="container">
-              {forecasts.map((w, index) => (
-                <Card
-                  key={index}
-                  date={getDate(w.dt)}
-                  emoji={getEmojiClassName(w.weather[0].main, getTime(w.dt))}
-                  mainWeather={w.weather[0].main}
-                  maxTemp={w.main.temp_max}
-                  minTemp={w.main.temp_min}
-                  temp={w.main.temp}
-                  time={getTime(w.dt)}
-                  weather={w.weather[0].description}
-                />
+          <div>
+        <button onClick={this.callNodeService}>Activities that can be done to day </button>
+        <div>Résultat: {result}</div>
+      </div>
+      {/* <div>
+        <button onClick={this.handleActivityRequest}>Ask for activities</button>
+        {activitySuggestions && (
+          <div>
+            <h3>Activity Suggestions:</h3>
+            <ul>
+              {activitySuggestions.map((activity, index) => (
+                <li key={index}>{activity}</li>
               ))}
-            </div>
-          )}
+            </ul>
+          </div>
+        )}
+      </div> */}
+          
         </>
       );
     } else {
@@ -130,16 +143,22 @@ class App extends React.Component {
             </h2>
             <ul className="no-margin">
               <li>
-                <Anchor href="https://reactjs.org" text="React" />
+                <Presenter href="https://reactjs.org" text="React" />
               </li>
               <li>
-                <Anchor
+                <Presenter
                   href="https://developer.mozilla.org/en-US/docs/Web/API/Geolocation"
                   text="Geolocation"
                 />
               </li>
               <li>
-                <Anchor
+                <Presenter
+                  href="https://openweathermap.org"
+                  text="openweathermap.org-API"
+                />
+              </li>
+              <li>
+                <Presenter
                   href="https://openweathermap.org"
                   text="openweathermap.org-API"
                 />
@@ -150,6 +169,61 @@ class App extends React.Component {
       );
     }
   }
+
+
+  async run() {
+    try {
+      // Appeler la méthode pour gérer la demande d'activité
+      await this.handleActivityRequest();
+
+      // Générer des suggestions d'activités
+      const suggestions = await this.generateActivitySuggestions();
+
+      // Afficher les suggestions dans la console
+      console.log('Activity Suggestions:', suggestions);
+    } catch (error) {
+      // Gérer les erreurs
+      console.error('Error:', error.message);
+    }
+  }
+
+  async handleActivityRequest() {
+    try {
+      // Obtenez la météo actuelle et l'emplacement (utilisez vos propres fonctions ou méthodes)
+      const weather = this.getCurrentWeather();
+      const location = this.getUserLocation();
+
+      // Appelez la fonction pour générer des suggestions d'activités en fonction de la météo et de l'emplacement
+      const activitySuggestions = await generateActivitySuggestions(weather, location);
+
+      // Affichez les suggestions d'activités ou mettez à jour l'état en conséquence
+      console.log('Suggestions d\'activités:', activitySuggestions);
+
+      // Vous pouvez également mettre à jour l'état avec les suggestions pour les afficher dans votre composant
+      this.setState({ activitySuggestions });
+
+    } catch (error) {
+      console.error('Erreur lors de la gestion de la demande d\'activité:', error.message);
+    }
+  }
+  
+
+  async generateActivitySuggestions(weather, location) {
+    try {
+      // Simulate fetching activities from an API or database based on weather and location
+      const response = await fetch(`https://api.example.com/activities?weather=${weather}&location=${location}`);
+      const data = await response.json();
+
+      // Extract the list of activities from the response
+      const activities = data.activities;
+
+      return activities;
+    } catch (error) {
+      console.error('Error generating activity suggestions:', error.message);
+      throw error; // Propagate the error if needed
+    }
+  }
 }
+
 
 export default App;

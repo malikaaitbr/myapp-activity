@@ -1,8 +1,7 @@
 import React from 'react';
-import { getEmojiClassName } from './Card';
-import Toggle from './Toggle';
-import Emoji from './Emoji';
-import { getEmoji } from '../helpers';
+import { getEmojiClassName } from './WeatherCard';
+import Emoji from './WatherEmoji';
+import { getEmoji } from '../Geoloc';
 
 const City = (props) => {
   const { current, fix } = props;
@@ -10,7 +9,7 @@ const City = (props) => {
   if (fix) {
     return (
       <div className="today-sticky-container">
-        <Toggle />
+        
         <h1 className="text-center" style={{ margin: '0 0 10px 0' }}>
           <Emoji name={current.name} emoji="📍" />
           <Emoji
@@ -31,7 +30,7 @@ const City = (props) => {
   } else {
     return (
       <div>
-        <Toggle />
+        
         <h1 className="text-center">
           <Emoji name={current.name} emoji="📍" />
           <span className="today-city">{current.name}</span>
