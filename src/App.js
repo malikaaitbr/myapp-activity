@@ -8,8 +8,10 @@ import { hasGeolocationSupport } from "./Geoloc";
 import Emoji from "./Components/WatherEmoji";
 import Presenter from "./Components/Presenter";
 import generateActivitySuggestions from "./Components/Gpt3";
-
+import MapContainer from './Components/maps';
 import openai from 'openai';
+import { Server, createServer } from "miragejs";
+import Places from "./Components/Places";
 
 
 
@@ -20,11 +22,9 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
       fixCity: false,
       geoAccess: null,
-      result: '',
-      
+      result: '', 
     };
     this.coords = null;
    
@@ -39,28 +39,9 @@ class App extends React.Component {
 
   callNodeService = async () => {
     try {
-      // Votre logique existante (si nécessaire)
-      //activityService.handleActivityRequest();
-      generateActivitySuggestions();
-     
-      // Exécution de la logique de GPT-3
-      const completion = await openai.chat.completions.create({
-        messages: [
-          {
-            role: "system",
-            content: "You are a helpful assistant designed to suggest activities based on the weather and location.",
-          },
-          {
-            role: "user",
-            content: `What activities can I do today in ${City}? The weather is ${Emoji}.`,
-          },
-        ],
-        model: "gpt-3.5-turbo-1106",
-        response_format: { type: "json_object" },
-      });
-
+      generateActivitySuggestions(this.state.current,this.coords);
       // Mise à jour de l'état avec la réponse de GPT-3
-      this.setState({ result: completion.choices[0].message.content });
+      //this.setState({ result: completion.choices[0].message.content });
 
     } catch (error) {
       console.error('Erreur lors de l\'appel de GPT-3', error.message);
@@ -106,6 +87,11 @@ class App extends React.Component {
           <div>
         <button onClick={this.callNodeService}>Activities that can be done to day </button>
         <div>Résultat: {result}</div>
+        <div>
+      <h1>endroits</h1>
+      
+      <Places />
+    </div>
       </div>
       {/* <div>
         <button onClick={this.handleActivityRequest}>Ask for activities</button>
@@ -157,12 +143,7 @@ class App extends React.Component {
                   text="openweathermap.org-API"
                 />
               </li>
-              <li>
-                <Presenter
-                  href="https://openweathermap.org"
-                  text="openweathermap.org-API"
-                />
-              </li>
+        
             </ul>
           </div>
         </>
@@ -207,22 +188,6 @@ class App extends React.Component {
     }
   }
   
-
-  async generateActivitySuggestions(weather, location) {
-    try {
-      // Simulate fetching activities from an API or database based on weather and location
-      const response = await fetch(`https://api.example.com/activities?weather=${weather}&location=${location}`);
-      const data = await response.json();
-
-      // Extract the list of activities from the response
-      const activities = data.activities;
-
-      return activities;
-    } catch (error) {
-      console.error('Error generating activity suggestions:', error.message);
-      throw error; // Propagate the error if needed
-    }
-  }
 }
 
 

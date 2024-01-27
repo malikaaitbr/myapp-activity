@@ -37,6 +37,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "typescript": "^5.3.3"
+    "miragejs": "^0.1.48",
+    "typescript": "^3.2.1"
   }
 }
