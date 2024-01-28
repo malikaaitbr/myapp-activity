@@ -28,7 +28,8 @@ class App extends React.Component {
       geoAccess: null,
       result: '',
       activitiesTodo: [],
-      showPlaceDetails: false
+      showPlaceDetails: false,
+      selectedActivity: ''
     };
     this.coords = null;
     this.activityPage = null;
@@ -41,8 +42,8 @@ class App extends React.Component {
     }
   }
 
-  showPlaceDetailsSection(){
-    this.setState({ showPlaceDetails: true });
+  showPlaceDetailsSection(activity){
+    this.setState({ showPlaceDetails: true ,selectedActivity:activity});
   }
 
 
@@ -108,7 +109,7 @@ class App extends React.Component {
           {this.activityPage}
 
           {this.state.showPlaceDetails && (
-            <Places/>
+            <Places  selectedActivity={this.state.selectedActivity} location={this.coords} />
           )}
            
           {/*

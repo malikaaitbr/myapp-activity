@@ -23,8 +23,8 @@ class Activities extends Component {
     .catch(err=>console.log(err));*/
   }
 
-  onActivityClickListner(){
-    this.props.showPlaceDetailsFunction();
+  onActivityClickListner(activity){
+    this.props.showPlaceDetailsFunction(activity);
   }
 
   render() {
@@ -41,7 +41,7 @@ class Activities extends Component {
           <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
               {this.state.activitiesTodo.map(activity => {
-                return (<Grid item xs={4} md={4}><Item><div>{activity}</div><div><Button  onClick={() => { this.onActivityClickListner() }}  variant="text">Decouvrir</Button></div></Item></Grid>);
+                return (<Grid item xs={4} md={4}><Item><div>{activity}</div><div><Button  onClick={() => { this.onActivityClickListner(activity) }}  variant="text">Decouvrir</Button></div></Item></Grid>);
               })}
             </Grid>
           </Box>

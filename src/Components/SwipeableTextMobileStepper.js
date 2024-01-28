@@ -12,6 +12,7 @@ import { autoPlay } from 'react-swipeable-views-utils';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
+
 const images = [
   {
     label: 'San Francisco – Oakland Bay Bridge, United States',
@@ -35,10 +36,11 @@ const images = [
   },
 ];
 
-function SwipeableTextMobileStepper() {
+function SwipeableTextMobileStepper(props) {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const maxSteps = images.length;
+  const test=props.places;
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -60,12 +62,12 @@ function SwipeableTextMobileStepper() {
         sx={{
           display: 'flex',
           alignItems: 'center',
-          height: 200,
+          height: 100,
           pl: 2,
           bgcolor: 'background.default',
         }}
       >
-        <Typography>{images[activeStep].label}</Typography>
+        <Typography>{props.places[activeStep].name}</Typography>
       </Paper>
       <AutoPlaySwipeableViews
         axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
@@ -73,20 +75,20 @@ function SwipeableTextMobileStepper() {
         onChangeIndex={handleStepChange}
         enableMouseEvents
       >
-        {images.map((step, index) => (
-          <div key={step.label}>
+        {props.places.map((step, index) => (
+          <div key={step.place_id}>
             {Math.abs(activeStep - index) <= 2 ? (
               <Box
                 component="img"
                 sx={{
-                  height: 255,
+                  height: 400,
                   display: 'block',
-                  maxWidth: 400,
+                  maxWidth: 1000,
                   overflow: 'hidden',
                   width: '100%',
                 }}
-                src={step.imgPath}
-                alt={step.label}
+                src={step.icon}
+                alt={step.name}
               />
             ) : null}
           </div>
