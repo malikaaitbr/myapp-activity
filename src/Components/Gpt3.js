@@ -1,6 +1,3 @@
-const axios = require('axios');
-
-
 /*async generateActivitySuggestions(weather, location) {
   try {
     // Simulate fetching activities from an API or database based on weather and location
@@ -19,9 +16,11 @@ const axios = require('axios');
 
 
 const generateActivitySuggestions = async (weather, location) => {
-  const apiKey = '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';
+  const apiKey = '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';
   const apiEndpoint = 'https://api.openai.com/v1/engines/gpt-3.5-turbo-instruct/completions';
-  const prompt = `Quelles sont les activites que je pourrais faire aujourd´hui ? la situation meteo est ${weather.weather[0].description},temp=${weather.main.temp}C,wind speed=${weather.wind.speed},humidity=${weather.main.humidity},localisation=${location}`;
+  const prompt = `Quelles sont les activites que je pourrais faire aujourd´hui ? la situation meteo est ${weather.weather[0].description},temp=${weather.main.temp}C,wind speed=${weather.wind.speed},humidity=${weather.main.humidity},localisation=`+JSON.stringify(location);
+  var activities=[];
+
 
   const headers = {
     'Content-Type': 'application/json',
@@ -34,18 +33,39 @@ const generateActivitySuggestions = async (weather, location) => {
   };
 
   try {
-    //const response = await axios.post(apiEndpoint, data, { headers });
-   /* const response =fetch(apiEndpoint, {
-  method: 'POST',
-  headers: headers,
-  body: JSON.stringify(data)
-})*/
-    const response = {"id":"cmpl-8lHhYBY8e6VIuJkTElgOYngHwKKVn","object":"text_completion","created":1706280152,"model":"gpt-3.5-turbo-instruct",
-    "choices":[{"text":"\n\n1. Sunny and warm: \n- Have a picnic in the park \n- Go for a hike or bike ride \n- Play a round of mini golf \n- Visit the beach and go swimming \n- Have a barbecue or cookout with friends and family \n- Do outdoor yoga or meditation \n- Go for a scenic drive and explore new areas \n\n2. Cloudy and cool: \n- Go to a museum or art gallery \n- Have a movie marathon at home \n- Go to an","index":0,"logprobs":null,"finish_reason":"length"}],
-    "usage":{"prompt_tokens":9,"completion_tokens":100,"total_tokens":109}};
+   //const responseGpt = await axios.post(apiEndpoint, data, { headers });
 
-    const generatedText = response.choices[0].text;
-    return generatedText;
+    /*const res= await fetch(apiEndpoint, {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify(data)
+    });
+
+    activities= await res.json().then(data=>data.choices[0].text);
+    */
+    const response = {
+      "id": "cmpl-8ldK8U7jHXbx26U836KXjPSgAX6Do",
+      "object": "text_completion",
+      "created": 1706363268,
+      "model": "gpt-3.5-turbo-instruct",
+      "choices": [
+        {
+          "text": "\n\n1. Faire une randonnée en nature\n2. Aller faire du vélo\n3. Organiser un pique-nique\n4. Faire un tour en canoë ou en kayak\n5. Faire du camping\n6. Faire une promenade en bateau\n7. Faire du jardinage\n8. Faire du parapente ou du deltaplane\n9. Faire une partie de golf\n10. Organiser un barbecue",
+          "index": 0,
+          "logprobs": null,
+          "finish_reason": "length"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 60,
+        "completion_tokens": 100,
+        "total_tokens": 160
+      }
+    };
+
+    activities= response.choices[0].text.trim().replace(/[0-9]+\./g,'').split('\n'); 
+
+    return activities;
   } catch (error) {
     throw new Error(`Error calling GPT-3 API: ${error.message}`);
   }

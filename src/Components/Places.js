@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import SinglePlace from './SinglePlace';
+import { Card } from './WeatherCard';
+import { Avatar, CardActions, CardHeader, CardMedia, IconButton } from '@mui/material';
+import { red } from '@mui/material/colors';
+
 
 class Places extends Component {
     constructor(){
@@ -8,6 +12,7 @@ class Places extends Component {
           places:[]
         }
       }
+
       componentDidMount(){
         /*fetch('https://api.myjson.com/bins/87ohp')
         .then(res=>res.json())
@@ -47,10 +52,49 @@ class Places extends Component {
          }
 
          this.setState({places:data.candidates})
+        }
 
-      }
+    
+      
   render() {
     return (
+        <Card sx={{ maxWidth: 345 }}>
+        <CardHeader
+          avatar={
+            <Avatar sx={{ bgcolor: red[500] }} aria-label="Activitties">
+              Activity
+            </Avatar>
+          }
+          action={
+            <IconButton aria-label="settings">
+            </IconButton>
+          }
+          title="{data.name}"
+          subheader="{data.open_now}"
+        />
+        <CardMedia
+          component="img"
+          height="194"
+          image="data.icon"
+          alt="activity"
+        />
+        <CardActions disableSpacing>
+          <IconButton aria-label="add to favorites">
+          </IconButton>
+          <IconButton aria-label="share">
+        
+          </IconButton>
+         
+        </CardActions>
+       
+
+      </Card>
+    );
+}
+
+
+/*
+
       <div>
         <table className="table table-responsive text-justify">
             <thead>
@@ -69,6 +113,6 @@ class Places extends Component {
         </table>
       </div>
     )
-  }
+  }*/
 }
 export default Places;

@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
 import { API_KEY } from "./config";
-//import activityService from './Components/Service'
 import TodaysCard from "./Components/TodaysCard";
 import City from "./Components/LocCity";
 import { hasGeolocationSupport } from "./Geoloc";
@@ -12,6 +11,8 @@ import MapContainer from './Components/maps';
 import openai from 'openai';
 import { Server, createServer } from "miragejs";
 import Places from "./Components/Places";
+import { Box, Button, Grid, Paper, styled } from "@mui/material";
+import { BrowserRouter as Router } from 'react-router-dom'
 
 
 
@@ -24,24 +25,25 @@ class App extends React.Component {
     this.state = {
       fixCity: false,
       geoAccess: null,
-      result: '', 
+      result: '',
+      activitiesTodo: []
     };
     this.coords = null;
-   
   }
 
   componentDidMount() {
     if (hasGeolocationSupport()) {
       this.fetchTodaysWeather();
-      
+
     }
   }
 
   callNodeService = async () => {
     try {
-      generateActivitySuggestions(this.state.current,this.coords);
+      const activities = await generateActivitySuggestions(this.state.current, this.coords);
       // Mise à jour de l'état avec la réponse de GPT-3
-      //this.setState({ result: completion.choices[0].message.content });
+      
+      this.setState({ activitiesTodo: activities });
 
     } catch (error) {
       console.error('Erreur lors de l\'appel de GPT-3', error.message);
@@ -70,14 +72,20 @@ class App extends React.Component {
   };
 
 
- 
   render() {
     //const { activitySuggestions } = this.state;
-    const { geoAccess, current, fixCity, result} = this.state;
+    const { geoAccess, current, fixCity, result } = this.state;
+    const Item = styled(Paper)(({ theme }) => ({
+      backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+      ...theme.typography.body2,
+      padding: theme.spacing(1),
+      textAlign: 'center',
+      color: theme.palette.text.secondary,
+    }));
     if (geoAccess && current && !!API_KEY) {
       return (
         <>
-          
+
           <City current={current} fix={fixCity} />
           <TodaysCard
             emoji={current.weather[0]}
@@ -85,15 +93,19 @@ class App extends React.Component {
             city={current.name}
           />
           <div>
-        <button onClick={this.callNodeService}>Activities that can be done to day </button>
-        <div>Résultat: {result}</div>
-        <div>
-      <h1>endroits</h1>
-      
-      <Places />
-    </div>
-      </div>
-      {/* <div>
+            <Button onClick={() => { this.callNodeService() }}>What activity can I DO Today ??</Button>
+          </div>
+          <div>
+            <Box sx={{ flexGrow: 1 }}>
+              <Grid container spacing={2}>
+                {this.state.activitiesTodo.map(activity => {
+                  return (<Grid item xs={4} md={4}><Item><div>{activity}</div><div ><Button variant="text">Decouvrir</Button></div></Item></Grid>)
+                })}
+              </Grid>
+            </Box>
+          </div>
+
+          {/* <div>
         <button onClick={this.handleActivityRequest}>Ask for activities</button>
         {activitySuggestions && (
           <div>
@@ -106,7 +118,7 @@ class App extends React.Component {
           </div>
         )}
       </div> */}
-          
+
         </>
       );
     } else {
@@ -143,7 +155,7 @@ class App extends React.Component {
                   text="openweathermap.org-API"
                 />
               </li>
-        
+
             </ul>
           </div>
         </>
@@ -187,7 +199,7 @@ class App extends React.Component {
       console.error('Erreur lors de la gestion de la demande d\'activité:', error.message);
     }
   }
-  
+
 }
 
 
