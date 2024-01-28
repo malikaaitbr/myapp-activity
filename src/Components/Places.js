@@ -1,118 +1,94 @@
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import { Box, CardActionArea, Grid, Paper } from '@mui/material';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import MobileStepper from '@mui/material/MobileStepper';
+import Typography from '@mui/material/Typography';
+import { styled, useTheme } from '@mui/material/styles';
 import React, { Component } from 'react';
-import SinglePlace from './SinglePlace';
-import { Card } from './WeatherCard';
-import { Avatar, CardActions, CardHeader, CardMedia, IconButton } from '@mui/material';
-import { red } from '@mui/material/colors';
+import SwipeableViews from 'react-swipeable-views';
+import { autoPlay } from 'react-swipeable-views-utils';
+import SwipeableTextMobileStepper from './SwipeableTextMobileStepper';
+import CssBaseline from '@mui/material/CssBaseline';
+import Container from '@mui/material/Container';
 
 
 class Places extends Component {
-    constructor(){
-        super();
-        this.state={
-          places:[]
+  constructor(props) {
+    super(props);
+    this.state = {
+      activity: null
+    }
+  }
+
+  componentDidMount() {
+    /*fetch('https://api.myjson.com/bins/87ohp')
+    .then(res=>res.json())
+    .then(data=>this.setState({places:data.places}))
+    .catch(err=>console.log(err));*/
+
+
+
+    const data = {
+      "candidates": [
+        {
+          "place_id": "ChIJgUbEo8cfqokR5lP9_Wh_DaM",
+          "formatted_address": "140 George St, The Rocks NSW 2000, Australia",
+          "geometry": {
+            "location": {
+              "lat": -33.8599358,
+              "lng": 151.2090295
+            },
+            "viewport": {
+              "northeast": {
+                "lat": -33.85824377010728,
+                "lng": 151.2104386798927
+              },
+              "southwest": {
+                "lat": -33.86094342989272,
+                "lng": 151.2077390201073
+              }
+            }
+          },
+          "name": "Museum of Contemporary Art Australia",
+          "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
+          "opening_hours": {
+            "open_now": false
+          },
+          "rating": 4.4
         }
-      }
+      ],
+      "status": "OK"
+    }
 
-      componentDidMount(){
-        /*fetch('https://api.myjson.com/bins/87ohp')
-        .then(res=>res.json())
-        .then(data=>this.setState({places:data.places}))
-        .catch(err=>console.log(err));*/
+    this.setState({ places: data.candidates })
+  }
 
-        const data={
-            "candidates":[
-               {
-                  "place_id" : "ChIJgUbEo8cfqokR5lP9_Wh_DaM",  
-                  "formatted_address":"140 George St, The Rocks NSW 2000, Australia",
-                  "geometry":{
-                     "location":{
-                        "lat":-33.8599358,
-                        "lng":151.2090295
-                     },
-                     "viewport":{
-                        "northeast":{
-                           "lat":-33.85824377010728,
-                           "lng":151.2104386798927
-                        },
-                        "southwest":{
-                           "lat":-33.86094342989272,
-                           "lng":151.2077390201073
-                        }
-                     }
-                  },
-                  "name":"Museum of Contemporary Art Australia",
-                  "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/generic_business-71.png",
-                  "opening_hours":{
-                     "open_now":false
-                  },
-                  "rating":4.4
-               }
-            ],
-            "status":"OK"
-         }
 
-         this.setState({places:data.candidates})
-        }
-
-    
-      
   render() {
+
+    const Item = styled(Paper)(({ theme }) => ({
+      backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+      ...theme.typography.body2,
+      padding: theme.spacing(1),
+      textAlign: 'center',
+      color: theme.palette.text.secondary,
+    }));
+
     return (
-        <Card sx={{ maxWidth: 345 }}>
-        <CardHeader
-          avatar={
-            <Avatar sx={{ bgcolor: red[500] }} aria-label="Activitties">
-              Activity
-            </Avatar>
-          }
-          action={
-            <IconButton aria-label="settings">
-            </IconButton>
-          }
-          title="{data.name}"
-          subheader="{data.open_now}"
-        />
-        <CardMedia
-          component="img"
-          height="194"
-          image="data.icon"
-          alt="activity"
-        />
-        <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
-          </IconButton>
-          <IconButton aria-label="share">
+      <>
+        <h2>Places that you may like to visite : </h2>
+        <React.Fragment>
+          <CssBaseline />
+          <Container maxWidth="sm">
+            <SwipeableTextMobileStepper />
+          </Container>
+        </React.Fragment>
         
-          </IconButton>
-         
-        </CardActions>
-       
-
-      </Card>
-    );
-}
-
-
-/*
-
-      <div>
-        <table className="table table-responsive text-justify">
-            <thead>
-                <tr>
-                    <th scope="col">Place_Id</th>
-                    <th scope="col">Plance_Name</th>
-                    <th scope="col">Icone</th>
-                    <th scope="col">Opening_hours</th>
-                </tr>
-            </thead>
-            <tbody>
-                {this.state.places.map(place=>{
-                    return (<SinglePlace key={place.place_id} place={place} />)
-                })}
-            </tbody>
-        </table>
-      </div>
-    )
-  }*/
+      </>);
+  }
 }
 export default Places;

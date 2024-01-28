@@ -12,7 +12,8 @@ import openai from 'openai';
 import { Server, createServer } from "miragejs";
 import Places from "./Components/Places";
 import { Box, Button, Grid, Paper, styled } from "@mui/material";
-import { BrowserRouter as Router } from 'react-router-dom'
+import { Route, BrowserRouter as Router } from 'react-router-dom'
+import Activities from "./Components/Activities";
 
 
 
@@ -26,9 +27,11 @@ class App extends React.Component {
       fixCity: false,
       geoAccess: null,
       result: '',
-      activitiesTodo: []
+      activitiesTodo: [],
+      showPlaceDetails: false
     };
     this.coords = null;
+    this.activityPage = null;
   }
 
   componentDidMount() {
@@ -38,11 +41,17 @@ class App extends React.Component {
     }
   }
 
+  showPlaceDetailsSection(){
+    this.setState({ showPlaceDetails: true });
+  }
+
+
   callNodeService = async () => {
     try {
+
       const activities = await generateActivitySuggestions(this.state.current, this.coords);
       // Mise à jour de l'état avec la réponse de GPT-3
-      
+      this.activityPage = <Activities activities={activities}  showPlaceDetailsFunction={this.showPlaceDetailsSection.bind(this)} />
       this.setState({ activitiesTodo: activities });
 
     } catch (error) {
@@ -85,16 +94,24 @@ class App extends React.Component {
     if (geoAccess && current && !!API_KEY) {
       return (
         <>
-
           <City current={current} fix={fixCity} />
           <TodaysCard
             emoji={current.weather[0]}
             main={current.main}
             city={current.name}
           />
+
           <div>
             <Button onClick={() => { this.callNodeService() }}>What activity can I DO Today ??</Button>
           </div>
+
+          {this.activityPage}
+
+          {this.state.showPlaceDetails && (
+            <Places/>
+          )}
+           
+          {/*
           <div>
             <Box sx={{ flexGrow: 1 }}>
               <Grid container spacing={2}>
@@ -103,7 +120,7 @@ class App extends React.Component {
                 })}
               </Grid>
             </Box>
-          </div>
+              </div>*/}
 
           {/* <div>
         <button onClick={this.handleActivityRequest}>Ask for activities</button>
