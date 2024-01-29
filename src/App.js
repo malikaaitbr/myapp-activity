@@ -7,13 +7,15 @@ import { hasGeolocationSupport } from "./Geoloc";
 import Emoji from "./Components/WatherEmoji";
 import Presenter from "./Components/Presenter";
 import generateActivitySuggestions from "./Components/Gpt3";
-import MapContainer from './Components/maps';
 import openai from 'openai';
 import { Server, createServer } from "miragejs";
 import Places from "./Components/Places";
 import { Box, Button, Grid, Paper, styled } from "@mui/material";
 import { Route, BrowserRouter as Router } from 'react-router-dom'
 import Activities from "./Components/Activities";
+import { light } from "@mui/material/styles/createPalette";
+import { lightBlue } from "@mui/material/colors";
+
 
 
 
@@ -41,6 +43,7 @@ class App extends React.Component {
 
     }
   }
+
 
   showPlaceDetailsSection(activity){
     this.setState({ showPlaceDetails: true ,selectedActivity:activity});
@@ -95,22 +98,27 @@ class App extends React.Component {
     if (geoAccess && current && !!API_KEY) {
       return (
         <>
+        <div  className= "container" >
           <City current={current} fix={fixCity} />
-          <TodaysCard
+          <TodaysCard  
             emoji={current.weather[0]}
             main={current.main}
             city={current.name}
-          />
-
-          <div>
-            <Button onClick={() => { this.callNodeService() }}>What activity can I DO Today ??</Button>
-          </div>
-
+          /> 
+        
+          <div  >
+            <Button style={{color:'black'}} onClick={() => { this.callNodeService() }}>What activity can I DO Today ??</Button>
+          
+         <div style={{marginTop: '20px'}}>
           {this.activityPage}
+          </div>
+          
 
           {this.state.showPlaceDetails && (
             <Places  selectedActivity={this.state.selectedActivity} location={this.coords} />
           )}
+          </div>
+          </div>
            
           {/*
           <div>
@@ -147,77 +155,11 @@ class App extends React.Component {
               No API-Key given in <i>src\config.js</i>
             </h1>
           )}
-          {!geoAccess && (
-            <h2 className="text-center heading-location-access">
-              Allow location access.
-            </h2>
-          )}
-          <div className="container center-item">
-            <h2>
-              <Emoji name="Earth Globe" emoji="🌎" /> Weather App build with...{" "}
-              <Emoji name="Earth Globe" emoji="🌎" />
-            </h2>
-            <ul className="no-margin">
-              <li>
-                <Presenter href="https://reactjs.org" text="React" />
-              </li>
-              <li>
-                <Presenter
-                  href="https://developer.mozilla.org/en-US/docs/Web/API/Geolocation"
-                  text="Geolocation"
-                />
-              </li>
-              <li>
-                <Presenter
-                  href="https://openweathermap.org"
-                  text="openweathermap.org-API"
-                />
-              </li>
-
-            </ul>
-          </div>
+         
         </>
       );
     }
   }
-
-
-  async run() {
-    try {
-      // Appeler la méthode pour gérer la demande d'activité
-      await this.handleActivityRequest();
-
-      // Générer des suggestions d'activités
-      const suggestions = await this.generateActivitySuggestions();
-
-      // Afficher les suggestions dans la console
-      console.log('Activity Suggestions:', suggestions);
-    } catch (error) {
-      // Gérer les erreurs
-      console.error('Error:', error.message);
-    }
-  }
-
-  async handleActivityRequest() {
-    try {
-      // Obtenez la météo actuelle et l'emplacement (utilisez vos propres fonctions ou méthodes)
-      const weather = this.getCurrentWeather();
-      const location = this.getUserLocation();
-
-      // Appelez la fonction pour générer des suggestions d'activités en fonction de la météo et de l'emplacement
-      const activitySuggestions = await generateActivitySuggestions(weather, location);
-
-      // Affichez les suggestions d'activités ou mettez à jour l'état en conséquence
-      console.log('Suggestions d\'activités:', activitySuggestions);
-
-      // Vous pouvez également mettre à jour l'état avec les suggestions pour les afficher dans votre composant
-      this.setState({ activitySuggestions });
-
-    } catch (error) {
-      console.error('Erreur lors de la gestion de la demande d\'activité:', error.message);
-    }
-  }
-
 }
 
 

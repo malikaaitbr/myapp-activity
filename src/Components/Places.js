@@ -48,110 +48,109 @@ class Places extends Component {
 
     
     const data = {
-      "candidates": [
-        {
-          "place_id": "ChIJgUbEo8cfqokR5lP9_Wh_DaM",
-          "formatted_address": "140 George St, The Rocks NSW 2000, Australia",
-          "geometry": {
-            "location": {
-              "lat": -33.8599358,
-              "lng": 151.2090295
+      "candidates":[ {
+        "place_id": "ChIJgUbEo8cfqokR5lP9_Wh_DaM",
+        "formatted_address": "140 George St, The Rocks NSW 2000, Australia",
+        "geometry": {
+          "location": {
+            "lat": -33.8599358,
+            "lng": 151.2090295
+          },
+          "viewport": {
+            "northeast": {
+              "lat": -33.85824377010728,
+              "lng": 151.2104386798927
             },
-            "viewport": {
-              "northeast": {
-                "lat": -33.85824377010728,
-                "lng": 151.2104386798927
-              },
-              "southwest": {
-                "lat": -33.86094342989272,
-                "lng": 151.2077390201073
-              }
+            "southwest": {
+              "lat": -33.86094342989272,
+              "lng": 151.2077390201073
             }
-          },
-          "name": "Museum of Contemporary Art Australia",
-          "icon": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=600&h=250&q=60",
-          "opening_hours": {
-            "open_now": false
-          },
-          "rating": 4.4
+          }
         },
-        {
-          "place_id": "ChIJgUbEo8cfqokR5lP9_Wh_DaM",
-          "formatted_address": "140 George St, The Rocks NSW 2000, Australia",
-          "geometry": {
-            "location": {
-              "lat": -33.8599358,
-              "lng": 151.2090295
-            },
-            "viewport": {
-              "northeast": {
-                "lat": -33.85824377010728,
-                "lng": 151.2104386798927
-              },
-              "southwest": {
-                "lat": -33.86094342989272,
-                "lng": 151.2077390201073
-              }
-            }
-          },
-          "name": "Museum of Contemporary Art Australia",
-          "icon": "https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=600&h=250&q=60",
-          "opening_hours": {
-            "open_now": false
-          },
-          "rating": 4.4
+        "name": "Le Bois du Roi",
+        "icon": "https://cdt14.media.tourinsoft.eu/upload/le-bois-du-roi.jpg?width=730&height=560&crop=1",
+        "opening_hours": {
+          "open_now": false
         },
-        {
-          "place_id": "ChIJgUbEo8cfqokR5lP9_Wh_DaM",
-          "formatted_address": "140 George St, The Rocks NSW 2000, Australia",
-          "geometry": {
-            "location": {
-              "lat": -33.8599358,
-              "lng": 151.2090295
+        "rating": 4.4
+      },
+      {
+        "place_id": "ChIJgUbEo8cfqokR5lP9_Wh_DaM",
+        "formatted_address": "140 George St, The Rocks NSW 2000, Australia",
+        "geometry": {
+          "location": {
+            "lat": -33.8599358,
+            "lng": 151.2090295
+          },
+          "viewport": {
+            "northeast": {
+              "lat": -33.85824377010728,
+              "lng": 151.2104386798927
             },
-            "viewport": {
-              "northeast": {
-                "lat": -33.85824377010728,
-                "lng": 151.2104386798927
-              },
-              "southwest": {
-                "lat": -33.86094342989272,
-                "lng": 151.2077390201073
-              }
+            "southwest": {
+              "lat": -33.86094342989272,
+              "lng": 151.2077390201073
             }
-          },
-          "name": "Museum of Contemporary Art Australia",
-          "icon": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=600&h=250",
-          "opening_hours": {
-            "open_now": false
-          },
-          "rating": 4.4
+          }
         },
-        {
-          "place_id": "ChIJgUbEo8cfqokR5lP9_Wh_DaM",
-          "formatted_address": "140 George St, The Rocks NSW 2000, Australia",
-          "geometry": {
-            "location": {
-              "lat": -33.8599358,
-              "lng": 151.2090295
+        "name": "Raidillon de Montboulin",
+        "icon": "https://d2exd72xrrp1s7.cloudfront.net/www/000/1k6/2v/2vdwek629usnbk7yfbm5p5tb4a83nwye-uhi53507869/0?width=3072&height=2304&crop=false&q=70",
+        "opening_hours": {
+          "open_now": false
+        },
+        "rating": 4.4
+      },
+      {
+        "place_id": "ChIJgUbEo8cfqokR5lP9_Wh_DaY",
+        "formatted_address": "140 George St, The Rocks NSW 2000, Australia",
+        "geometry": {
+          "location": {
+            "lat": -33.8599358,
+            "lng": 151.2090295
+          },
+          "viewport": {
+            "northeast": {
+              "lat": -33.85824377010728,
+              "lng": 151.2104386798927
             },
-            "viewport": {
-              "northeast": {
-                "lat": -33.85824377010728,
-                "lng": 151.2104386798927
-              },
-              "southwest": {
-                "lat": -33.86094342989272,
-                "lng": 151.2077390201073
-              }
+            "southwest": {
+              "lat": -33.86094342989272,
+              "lng": 151.2077390201073
             }
+          }
+        },
+        "name": " la route du Clocher d'Achères",
+        "icon": "https://www.montsdulyonnaistourisme.fr/cache/images/9001991_apidae-fiche-header-big.jpg",
+        "opening_hours": {
+          "open_now": false
+        },
+        "rating": 4.4
+      },
+      {
+        "place_id": "ChIJgUbEo8cfqokR5lP9_Wh_DaZ",
+        "formatted_address": "140 George St, The Rocks NSW 2000, Australia",
+        "geometry": {
+          "location": {
+            "lat": -33.8599358,
+            "lng": 151.2090295
           },
-          "name": "Museum of Contemporary Art Australia",
-          "icon": "https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=600&h=250&q=60",
-          "opening_hours": {
-            "open_now": false
-          },
-          "rating": 4.4
+          "viewport": {
+            "northeast": {
+              "lat": -33.85824377010728,
+              "lng": 151.2104386798927
+            },
+            "southwest": {
+              "lat": -33.86094342989272,
+              "lng": 151.2077390201073
+            }
+          }
+        },
+        "name": "ILE DE BOULANCOURT",
+        "icon": "https://www.campingfrance.com/asset/cms/700x455/163838/config/115270/image.jpg",
+        "opening_hours": {
+          "open_now": false
+        },
+        "rating": 4.4
         }
       ],
       "status": "OK"
@@ -191,8 +190,8 @@ class Places extends Component {
             }
           }
         },
-        "name": "Museum of Contemporary Art Australia 1",
-        "icon": "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=600&h=250&q=60",
+        "name": "Le Bois du Roi",
+        "icon": "https://cdt14.media.tourinsoft.eu/upload/le-bois-du-roi.jpg?width=730&height=560&crop=1",
         "opening_hours": {
           "open_now": false
         },
@@ -217,8 +216,8 @@ class Places extends Component {
             }
           }
         },
-        "name": "Galerie IHÑ",
-        "icon": "https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=600&h=250&q=60",
+        "name": "Raidillon de Montboulin",
+        "icon": "https://d2exd72xrrp1s7.cloudfront.net/www/000/1k6/2v/2vdwek629usnbk7yfbm5p5tb4a83nwye-uhi53507869/0?width=3072&height=2304&crop=false&q=70",
         "opening_hours": {
           "open_now": false
         },
@@ -243,8 +242,8 @@ class Places extends Component {
             }
           }
         },
-        "name": "Museum of Contemporary Art Australia 2",
-        "icon": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=600&h=250",
+        "name": " la route du Clocher d'Achères",
+        "icon": "https://www.montsdulyonnaistourisme.fr/cache/images/9001991_apidae-fiche-header-big.jpg",
         "opening_hours": {
           "open_now": false
         },
@@ -269,8 +268,8 @@ class Places extends Component {
             }
           }
         },
-        "name": "Museum of Contemporary Art Australia 3",
-        "icon": "https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=600&h=250&q=60",
+        "name": "ILE DE BOULANCOURT",
+        "icon": "https://www.campingfrance.com/asset/cms/700x455/163838/config/115270/image.jpg",
         "opening_hours": {
           "open_now": false
         },
@@ -280,7 +279,6 @@ class Places extends Component {
 
     return (
       <>
-        <h2>Places that you may like to visite : </h2>
         <React.Fragment>
           <CssBaseline />
           <Container maxWidth="sm">

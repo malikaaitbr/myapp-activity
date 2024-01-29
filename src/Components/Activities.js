@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import SinglePlace from './SinglePlace';
+
 import { Card } from './WeatherCard';
-import { Avatar, Box, Button, CardActions, CardHeader, CardMedia, Grid, IconButton, Paper, styled } from '@mui/material';
+import { Avatar, Box, Button, CardActions, CardHeader, CardMedia, Grid, IconButton, Paper, colors, styled } from '@mui/material';
 import { red } from '@mui/material/colors';
 
 
@@ -41,7 +41,7 @@ class Activities extends Component {
           <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
               {this.state.activitiesTodo.map(activity => {
-                return (<Grid item xs={4} md={4}><Item><div>{activity}</div><div><Button  onClick={() => { this.onActivityClickListner(activity) }}  variant="text">Decouvrir</Button></div></Item></Grid>);
+                return (<Grid item xs={2} md={4}><Item  style={{backgroundColor: 'whitesmoke'}}><div style={{fontSize:'10px'}}><h1>{activity}</h1></div><div><Button style={{float: 'right', marginTop:'-30px'}} textAlign='right' onClick={() => { this.onActivityClickListner(activity) }}  variant="text">Decouvrir</Button></div></Item></Grid>);
               })}
             </Grid>
           </Box>

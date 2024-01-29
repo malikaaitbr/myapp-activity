@@ -1,5 +1,8 @@
 
 
+.container{
+  background-image: url('https://wallpaperset.com/w/full/7/a/b/70196.jpg');
+}
 .weather-wrapper {
   display: flex;
   justify-content: center;
@@ -11,8 +14,8 @@
   border-radius: 20px;
   position: relative;
   overflow: hidden;
-  width: 270px;
-  height: 270px;
+  width: 150px;
+  height: 100px;
   background-color: white;
   box-shadow: 0px 0px 25px 1px rgba(50, 50, 50, 0.1);
   animation: appear 500ms ease-out forwards;
@@ -21,9 +24,10 @@
 .weather-card h1 {
   position: absolute;
   font-weight: 300;
-  font-size: 80px;
+  font-size: 18px;
   bottom: 0;
-  left: 35px;
+  left: 5px;
+  margin: 0px 5px 40px 40px;
   opacity: 0;
   transform: translateX(150px);
   animation: title-appear 500ms ease-out 500ms forwards;
@@ -33,7 +37,7 @@
   position: absolute;
   font-family: 'Lato', sans-serif;
   font-weight: 300;
-  font-size: 28px;
+  font-size: 18px;
   bottom: 0;
   left: 35px;
   animation: title-appear 1s ease-out 500ms forwards;
@@ -41,11 +45,12 @@
 
 .weather-icon {
   position: relative;
-  width: 50px;
-  height: 50px;
-  top: 0;
+  width: 30px;
+  height: 30px;
+  top: 10;
   float: right;
-  margin: 40px 40px 0 0;
+  margin: 0px 0px 40px 40px;
+ 
   animation: weather-icon-move 5s ease-in-out infinite;
 }
 
@@ -143,14 +148,16 @@
   }
 }
 
-
 .text-center {
   text-align: center;
+     font-size:large;
+
 }
+
 
 .card-weather-emoji {
   font-size: 3rem;
-  margin-top: 20px;
+  margin-top: 10px;
   display: inherit;
 }
 
@@ -183,7 +190,7 @@
 
 .today-city {
   border-bottom: 4px solid #80808063;
-  padding: 0 5px;
+  padding: 0 2px;
 }
 
 .today-as-emoji {
@@ -214,3 +221,14 @@
   outline-color: transparent;
 }
 
+.Button{
+
+  position: absolute;
+  right: 0%;
+  
+}
+.today-sticky-container{
+  height: 150px;
+  width: 200px;
+
+}
